@@ -1,0 +1,24 @@
+ #! /bin/sh
+ # /etc/init.d/customstartup
+
+ case "$1" in
+   start)
+     echo 261818 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed
+     cd /home/user/datalogger
+     ## If you are launching a daemon or other long running processes
+     ## this should be started with
+     nohup /home/user/datalogger/datalogger.py 2>&1 >> log &
+     ;;
+   stop)
+     # if you have anything that needs to run on shutdown
+     #/path/to/your/shutdown/scripts
+     pkill datalogger.py
+     ;;
+   *)
+     echo "Usage: customstartup start|stop" >&2
+     exit 3
+     ;;
+ esac
+
+ exit 0
+
